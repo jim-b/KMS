@@ -48,7 +48,6 @@
  *     or, something else entirely I haven't considered yet.
  * </PRE>
  *
- * </PRE>
  * In short these actions (i.e. what YOU must implement for your chosen
  * storage mechanism for your KMS) are:
  * <PRE>
@@ -201,7 +200,7 @@ short    kmsdb_getKSAK(
 /*******************************************************************************
  * Get a specified KMS's KPAK (KMS Public Authentication Key) - PUBLIC.
  ******************************************************************************/
-short    msdb_getKPAK(
+short    kmsdb_getKPAK(
     const uint8_t *kms_uri,
     uint8_t       *KPAK);
 

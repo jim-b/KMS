@@ -41,8 +41,8 @@
 #include "kmsdb.h"
 #include "log.h"
 
-#define KMS_STORAGE_SECTION_NAME "(KMS-STORAGE)"
-#define KMS_MAX_ATTR_LEN         1024
+#define KMS_STORAGE_SECTION_NAME "(KMS-STORAGE)"/*!< DEBUG output section ID. */
+#define KMS_MAX_ATTR_LEN         1024           /*!< Maximum attribute length.*/
 
 /***************************************************************************//**
  * Stores a new KMS.
@@ -92,7 +92,7 @@ short kms_removeKms(
     return kmsdb_delete(kms_uri);
 } /* kms_removeKms */
 
-/*******************************************************************************
+/***************************************************************************//**
  * Deletes all the KMS data.
  *
  * @return A success/ failure indicator.

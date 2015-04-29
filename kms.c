@@ -39,9 +39,10 @@
 #include <eccsi.h> /* For computeHS */
 #include <log.h>
 
-#define KES_SECTION_NAME   "(KMS) "
-#define MAX_RSK_COORD_SIZE 256
-#define ECCSI_ERR_HS       "ECCSI Compute HS, "
+#define KES_SECTION_NAME   "(KMS) " /*!< DEBUG output section ID.     */
+
+#define MAX_RSK_COORD_SIZE 256      /*!< Maximum RSK coordinate size. */
+#define ECCSI_ERR_HS    "ECCSI Compute HS, " /*!< ERROR start for compute HS. */
 
 /***************************************************************************//**
  * Creates and stores the KMS keys :
@@ -814,9 +815,6 @@ uint8_t kms_createRSK(
  * Adds a 'user' to storage, firstly calculating the RSK and SSK/PVT pairing/
  * Key Material.
  *
- * @param[in]  ms_param_set  Mikey-Sakke Paraneter Set (currently only one).
- * @param[in]  kms_id        String of the 'kms-id' used to create the 
- *                           'community' the 'user' is part of.
  * @param[in]  user_id_date  String of the 'date' part of the 'user-id'.
  * @param[in]  user_id_uri   String of the 'uri' part of the 'user-id'.
  * @param[out] community     String pointer of the 'community' the 'user' will
@@ -962,10 +960,10 @@ uint8_t kms_addUser(
  * may even decide to copy the 'community' and 'user' files to the client/ demo
  * code for it to use.
  *
- * @param[in]  user_id_date  String of the 'date' part of the 'user-id'.
- * @param[in]  user_id_uri   String of the 'uri' part of the 'user-id'.
- * @param[out] community     String pointer of the 'community' the 'user' is
- *                           part of.
+ * @param[in]  user_date  String of the 'date' part of the 'user-id'.
+ * @param[in]  user_uri   String of the 'uri' part of the 'user-id'.
+ * @param[in]  community  String pointer of the 'community' the 'user' is
+ *                        part of.
  *****************************************************************************/
 void kms_listDetailsToSendToClient(
     char   *user_date,

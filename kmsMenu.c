@@ -45,45 +45,52 @@
 #include <kmsParameters.h>
 #include <communityParameters.h>
 
-#define STORAGE_KMS_DIRECTORY         "./storage/kms"
-#define STORAGE_COMMUNITIES_DIRECTORY "./storage/communities"
-#define STORAGE_USERS_DIRECTORY       "./storage/users"
+#define STORAGE_KMS_DIRECTORY         "./storage/kms"         /*!< KMS storage directory */
+#ifndef STORAGE_COMMUNITIES_DIRECTORY 
+#define STORAGE_COMMUNITIES_DIRECTORY "./storage/communities" /*!< Communities storage directory */
+#endif 
+#ifndef STORAGE_USERS_DIRECTORY 
+#define STORAGE_USERS_DIRECTORY       "./storage/users"       /*!< Users storage directory */
+#endif 
 
-#define ES_MAX_DIR_FILE_NAME_LEN 1024
+#define ES_MAX_DIR_FILE_NAME_LEN 1024 /*!< Directory path maximum length */
 
-#define KMS_MAX_COMMUNITIES       100
-#define KMS_MAX_KMS               100
-#define KMS_MAX_USERS            1000
-#define KMS_MAX_LINE_LEN          512
+#define KMS_MAX_COMMUNITIES       100 /*!< Maximum number of communities */
+#define KMS_MAX_KMS               100 /*!< Maximum number of KMSes       */
+#define KMS_MAX_USERS            1000 /*!< Maximum number of Users       */
+#define KMS_MAX_LINE_LEN          512 /*!< Maximum attribute line length */
 
 /* Arrays of string for KMSes, Communities and Users used in list functions. */
-char *kms[KMS_MAX_KMS];
-char *communities[KMS_MAX_COMMUNITIES];
-char *users[KMS_MAX_USERS];
+char *kms[KMS_MAX_KMS];                 /*!< Array of kms names - list selection */
+char *communities[KMS_MAX_COMMUNITIES]; /*!< Array of community names - list selection */
+char *users[KMS_MAX_USERS];             /*!< Array of user names - list selection */
 
-char  tmp_path[ES_MAX_DIR_FILE_NAME_LEN];
+char  tmp_path[ES_MAX_DIR_FILE_NAME_LEN];/*!< Temporary file name space       */
 
-char  user_date[KMS_MAX_LINE_LEN];
-char  user_uri[KMS_MAX_LINE_LEN];
-char  community[KMS_MAX_LINE_LEN];
-char  kms_name[KMS_MAX_LINE_LEN];
-char  owner[KMS_MAX_LINE_LEN];
-char  version[KMS_MAX_LINE_LEN];
-char  cert_uri[KMS_MAX_LINE_LEN];
-char  kms_uri[KMS_MAX_LINE_LEN];
-char  issuer[KMS_MAX_LINE_LEN];
-char  valid_from[KMS_MAX_LINE_LEN];
-char  valid_to[KMS_MAX_LINE_LEN];
-char  user_id_format[KMS_MAX_LINE_LEN];
-char  kms_domain_list[KMS_MAX_LINE_LEN];
+char  user_date[KMS_MAX_LINE_LEN];       /*!< Array for storing User-Date     */
+char  user_uri[KMS_MAX_LINE_LEN];        /*!< Array for storing User-Uri      */
+char  community[KMS_MAX_LINE_LEN];       /*!< Array for storing Community     */
+char  kms_name[KMS_MAX_LINE_LEN];        /*!< Array for storing KmsName       */
+char  owner[KMS_MAX_LINE_LEN];           /*!< Array for storing Owner         */
+char  version[KMS_MAX_LINE_LEN];         /*!< Array for storing Version       */
+char  cert_uri[KMS_MAX_LINE_LEN];        /*!< Array for storing CertUri       */
+char  kms_uri[KMS_MAX_LINE_LEN];         /*!< Array for storing KmsUri        */
+char  issuer[KMS_MAX_LINE_LEN];          /*!< Array for storing Issuer        */
+char  valid_from[KMS_MAX_LINE_LEN];      /*!< Array for storing ValidFrom     */
+char  valid_to[KMS_MAX_LINE_LEN];        /*!< Array for storing ValidTo       */
+char  user_id_format[KMS_MAX_LINE_LEN];  /*!< Array for storing UserIdFormat  */
+char  kms_domain_list[KMS_MAX_LINE_LEN]; /*!< Array for storing KmsDomainList */
 
-char  conf_line[KMS_MAX_LINE_LEN]; /* For reading from files/ */
+char  conf_line[KMS_MAX_LINE_LEN]; /*!< For reading from files/ */
 
 #define rfc6508_z_T  "AFF429D3" "5F84B110" "D094803B" "3595A6E2" \
-                     "998BC99F"
-#define rfc6507_KSAK "12345"
-#define rfc6507_v    "23456"
+                     "998BC99F" /*!< RFC 6508 'z_T' value  */
+#define rfc6507_KSAK "12345"    /*!< RFC 6507 'KSAK' value */
+#define rfc6507_v    "23456"    /*!< RFC 'v' value         */
 
+/***************************************************************************//**
+ * Clear KMS list array.
+ ******************************************************************************/
 void kms_clearKmsList() {
     uint8_t c = 0;
   
@@ -98,6 +105,9 @@ void kms_clearKmsList() {
     }
 } /* kms_clearKmsList */
 
+/***************************************************************************//**
+ * Create KMS list, copying all KMS names into in the kms array.
+ ******************************************************************************/
 uint8_t kms_list() {
     DIR             *dir_p      = NULL;
     struct   dirent *dirEntry_p = NULL;
@@ -137,6 +147,12 @@ uint8_t kms_list() {
 
 } /* kms_list */
 
+/***************************************************************************//**
+ * Display the list of KMSes and allow selection of one of these, returning 
+ * this selection.
+ *
+ * @return The selected kms.
+ ******************************************************************************/
 char *kms_listSelect() {
     DIR             *dir_p      = NULL;
     struct   dirent *dirEntry_p = NULL;
@@ -168,6 +184,15 @@ char *kms_listSelect() {
 
 } /* kms_listSelect */
 
+/***************************************************************************//**
+ * Handle KMS management functions.
+ *
+ *     0 - Return to previous menu
+ *     1 - List KMS
+ *     2 - Add KMS
+ *     3 - Delete KMS
+ *     4 - List KMS Details
+ ******************************************************************************/
 void kmsMenu() {
     unsigned int   selection      = 0;
     char           confirm        = 0;
@@ -368,6 +393,9 @@ void kmsMenu() {
 
 } /* kmsMenu */
 
+/***************************************************************************//**
+ * Clear Communities list array.
+ ******************************************************************************/
 void kms_clearCommunitiesList() {
     uint8_t c = 0;
 
@@ -382,6 +410,10 @@ void kms_clearCommunitiesList() {
     }
 } /* kms_clearCommunitiesList */
 
+/***************************************************************************//**
+ * Create Community list, copying all Community names into in the Community 
+ * array.
+ ******************************************************************************/
 uint8_t kms_communityList() {
     DIR            *dir_p           = NULL;
     struct  dirent *dirEntry_p      = NULL;
@@ -424,6 +456,12 @@ uint8_t kms_communityList() {
 
 } /* kms_communityList */
 
+/***************************************************************************//**
+ * Display the list of communities and allow selection of one of these,
+ * returning this selection.
+ *
+ * @return The selected community.
+ ******************************************************************************/
 char *kms_communityListSelect() {
     DIR            *dir_p           = NULL;
     struct  dirent *dirEntry_p      = NULL;
@@ -455,6 +493,15 @@ char *kms_communityListSelect() {
     return ret_val;
 } /* kms_communityListSelect */
 
+/***************************************************************************//**
+ * Handle Community management functions.
+ *
+ *     0 - Return to previous menu
+ *     1 - List Communities
+ *     2 - Add Community
+ *     3 - Delete Community
+ *     4 - List Community Details
+ ******************************************************************************/
 void communityMenu() {
     unsigned int  selection          = 0;
     char          confirm            = 0;
@@ -674,6 +721,10 @@ void communityMenu() {
 /******************************************************************************/
 /* User menu functions                                                        */
 /******************************************************************************/
+
+/***************************************************************************//**
+ * Clear User list array.
+ ******************************************************************************/
 void kms_clearUsersList() {
     uint8_t c = 0;
 
@@ -688,6 +739,9 @@ void kms_clearUsersList() {
     }
 } /* kms_clearUsersList */
 
+/***************************************************************************//**
+ * Create User list, copying all User names into in the User array.
+ ******************************************************************************/
 uint8_t kms_userList() {
     DIR            *dir_p           = NULL;
     struct  dirent *dirEntry_p      = NULL;
@@ -730,6 +784,12 @@ uint8_t kms_userList() {
 
 } /* kms_userList */
 
+/***************************************************************************//**
+ * Display the list of users and allow selection of one of these, returning 
+ * this selection.
+ *
+ * @return The selected user.
+ ******************************************************************************/
 char *kms_userListSelect() {
     DIR            *dir_p           = NULL;
     struct  dirent *dirEntry_p      = NULL;
@@ -759,6 +819,15 @@ char *kms_userListSelect() {
 
 } /* kms_userListSelect */
 
+/***************************************************************************//**
+ * Handle User management functions.
+ *
+ *     0 - Return to previous menu
+ *     1 - List Users
+ *     2 - Add User
+ *     3 - Delete User
+ *     4 - List User Details (to send)
+ ******************************************************************************/
 void userMenu() {
     unsigned int  selection          = 0;
     char          confirm            = 0;
@@ -981,6 +1050,14 @@ void userMenu() {
 
 } /* userMenu */
 
+/***************************************************************************//**
+ * Top level menu
+ *
+ *     0 Exit
+ *     1 KMS Management
+ *     2 Community Management
+ *     3 User Management
+ ******************************************************************************/
 int main(int argc, char *argv[]) {
     unsigned int selection = 0;
     unsigned int cont      = 1;

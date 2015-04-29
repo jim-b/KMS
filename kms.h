@@ -29,7 +29,10 @@ extern "C" {
 
 #include <global.h>
 
-#define KMS_V_FAILURE 20
+#define KMS_V_FAILURE 20 /*!< ERROR code for 'v' calculation failures. Indicates
+                          *   to the caller that they should retry with another
+                          *   value for 'v'.
+                          */
 
 /*******************************************************************************
  * Create KMS keys.

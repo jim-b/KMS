@@ -250,10 +250,10 @@ static void utils_prettyPrintOctetString(
  * @param[in]  kms_uri  The URI of the KMS.
  * @param[in]  version  The version number of the KMS data.
  * @param[in]  owner    A designated owner of the KMS.
- * @param[in]  zT       KMS Master Secret.
- * @param[in]  zT_len   KMS Master Secret Length.
- * @param[in]  ZT       KMS Public Key.
- * @param[in]  ZT_len   KMS Public Key length.
+ * @param[in]  z_T      KMS Master Secret.
+ * @param[in]  z_T_len  KMS Master Secret Length.
+ * @param[in]  Z_T      KMS Public Key.
+ * @param[in]  Z_T_len  KMS Public Key length.
  * @param[in]  KSAK     KMS Secret Authentiction Key.
  * @param[in]  KSAK_len KMS Secret Authentication key length.
  * @param[in]  KPAK     KMS Public Authentication Key.
@@ -672,7 +672,7 @@ short kmsdb_getOwner(
  * Get the stored z_T (Master Secret) for the specified KMS.
  *
  * @param[in]  kms_uri The name of the KMS from which to get the Master Secret.
- * @param[out] z_T     The Master Secret z_T, on success.
+ * @param[out] zT      The Master Secret z_T, on success.
  *
  * @return MSDB_SUCCESS or MSDB_FAILURE
  ******************************************************************************/
@@ -706,7 +706,7 @@ short kmsdb_getzT(
  * Get the stored Z_T (Public Key) for the specified KMS.
  *
  * @param[in]  kms_uri The name of the KMS from which to get the Public Key.
- * @param[out] Z_T     The Public Key Z_T, on success.
+ * @param[out] ZT      The Public Key Z_T, on success.
  *
  * @return MSDB_SUCCESS or MSDB_FAILURE
  ******************************************************************************/
