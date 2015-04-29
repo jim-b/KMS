@@ -113,7 +113,8 @@ uint8_t kms_list() {
     snprintf(tmp_path, sizeof(tmp_path), STORAGE_KMS_DIRECTORY);
     if (NULL != (dir_p = opendir(tmp_path))) {
         while (NULL != (dirEntry_p = readdir(dir_p))) {
-            if ((strcmp(dirEntry_p->d_name,  ".") != 0) &&
+            if ((strcmp(dirEntry_p->d_name, ".gitignore") != 0) &&
+                (strcmp(dirEntry_p->d_name, ".") != 0) &&
                 (strcmp(dirEntry_p->d_name, "..") != 0)) {
                 memset(tmp_path,  0, sizeof(tmp_path));
                 snprintf(tmp_path, sizeof(tmp_path), "%s/%s",
@@ -399,7 +400,8 @@ uint8_t kms_communityList() {
     snprintf(tmp_path, sizeof(tmp_path), STORAGE_COMMUNITIES_DIRECTORY);
     if (NULL != (dir_p = opendir(tmp_path))) {
         while (NULL != (dirEntry_p = readdir(dir_p))) {
-            if ((strcmp(dirEntry_p->d_name,  ".") != 0) &&
+            if ((strcmp(dirEntry_p->d_name, ".gitignore") != 0) &&
+                (strcmp(dirEntry_p->d_name, ".") != 0) &&
                 (strcmp(dirEntry_p->d_name, "..") != 0)) {
                 memset(tmp_path,  0, sizeof(tmp_path));
                 snprintf(tmp_path, sizeof(tmp_path), "%s/%s",
@@ -704,7 +706,8 @@ uint8_t kms_userList() {
     snprintf(tmp_path, sizeof(tmp_path), STORAGE_USERS_DIRECTORY);
     if (NULL != (dir_p =  opendir(tmp_path))) {
         while (NULL != (dirEntry_p = readdir(dir_p))) {
-            if ((strcmp(dirEntry_p->d_name,  ".") != 0) &&
+            if ((strcmp(dirEntry_p->d_name, ".gitignore") != 0) &&
+                (strcmp(dirEntry_p->d_name, ".") != 0) &&
                 (strcmp(dirEntry_p->d_name, "..") != 0)) {
                 memset(tmp_path,  0, sizeof(tmp_path));
                 snprintf(tmp_path, sizeof(tmp_path), "%s/%s",
