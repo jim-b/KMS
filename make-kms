@@ -1,0 +1,65 @@
+################################################################################
+# A simple make script.
+#
+# The intent of this script is to provide the simplest possible way to get this
+# KMS demonstration code up and running. From there you can look at the code, 
+# see how it works and play with it. If you make changes that break something, 
+# reverting to a working version should be simple.
+#
+# Please feed back any bugs, or comments back to the author, so that we can 
+# make this the best if can be for everybody.
+#
+# In order to run the kms program you will need to have also downloaded the 
+# ECCSI-SAKKE crypto library project I have also written and build it. Once 
+# that is built you need to make the crypto (and other) libraries accessible
+# accessible to this 'make-kms' script by modifying the:
+#
+#     ECCSI_SAKKE_DIR 
+#
+# attribute below. 
+#
+# Once made, the KMS executable will also need access to the ECCSI-SAKKE crypto
+# libraries. The easiest way to do this on linux systems is to add the same 
+# value you set ECCSI_SAKKE_DIR to, to LD_LIBRARY_PATH, e.g.:
+#
+#     export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<ECCSI-SAKKE-CODE-DIR>/lib
+#
+# Other ways would be to copy the ECCSI-SAKKE libraries to a 'usual' libraries 
+# location, or, # add the path to the lib directory in this directory, to 
+# /etc/ld.so.conf, and run ldconfig, although you will need to be root to do 
+# this.
+#
+# Once made the kms program can be run with:
+#
+#     .kms/
+#
+# Other useful notes:
+#
+#   o I would advise you turn DEBUG output off, comment out the following line:
+#
+#         #define ES_OUTPUT_DEBUG
+#
+#     from src/utils/log.h NOTE! This is in the ECCSI-SAKKE codei NOT here! Then 
+#     rebuild the ECCSI-SAKKE crypto libraries and this KMS project.
+#   o Both the ECCSI-SAKKE crypto library and this code assume the storage 
+#     directory for users, communities and now (with this code) to be relative
+#     directory paths, from where the code is executed; So beware if you start
+#     playing with the storage directory locations.
+#
+################################################################################
+
+# CHANGE ME!!!!!!
+ECCSI_SAKKE_DIR=<ECCSI-SAKKE-CODE-DIR>
+
+gcc  -ggdb -DEBUG \
+    -I. -I${ECCSI_SAKKE_DIR}/inc   -I${ECCSI_SAKKE_DIR}/4u2change \
+    -I${ECCSI_SAKKE_DIR}/src/utils -I${ECCSI_SAKKE_DIR}/src/sakke \
+    -I${ECCSI_SAKKE_DIR}/src/eccsi -I${ECCSI_SAKKE_DIR}/src/data  \
+    -L/usr/lib64 -L/usr/lib32 \
+    -L${ECCSI_SAKKE_DIR}/lib \
+    -lssl -lcrypto \
+    -lesprng -lesdata -lescrypt \
+    ./4u2change/kmsdb.c \
+    ./kmsParameters.c \
+    ./kms.c \
+    ./kmsMenu.c -o  kms
