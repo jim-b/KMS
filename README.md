@@ -57,7 +57,8 @@ Running
 -------
 
 To run:
-    ./kms
+
+     ./kms
 
 Note! You will need to do the following first before running:
           
