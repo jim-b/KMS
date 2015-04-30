@@ -23,10 +23,15 @@ Points to note:
 Other things to note with this implementation:
     o If you want to turn DEBUG output off, comment out the following line:
           #define ES_OUTPUT_DEBUG
-      from src/utils/log.h *in the ECCSI_SAKKE project and rebuild it*.
+      from src/utils/log.h __in the ECCSI_SAKKE project and rebuild it__.
     o If you want to change where data (community and user key data) you 
-      will need to modify STORAGE_ROOT in inc/globals.h again *in the
-      ECCSI-SAKKE project and rebuild it*.
+      will need to modify STORAGE_ROOT in inc/globals.h again __in the
+      ECCSI-SAKKE project and rebuild it__.
+    o In the make file you need to tell the make script where it can find 
+      the ECCSI-SAKKE crypto library files. To do this you modify the 
+      __ECCSI_SAKKE_DIR__ attribute in the _make-kms_ file, for example:
+
+         ECCSI_SAKKE_DIR=/home/_myname_/ECCSI-SAKKE
 
 Making
 
