@@ -24,7 +24,9 @@ Points to note:
 
 Other things to note with this implementation:
     o If you want to turn DEBUG output off, comment out the following line:
+    
           #define ES_OUTPUT_DEBUG
+          
       from src/utils/log.h __in the ECCSI_SAKKE project and rebuild it__.
     o If you want to change where data (community and user key data) you 
       will need to modify STORAGE_ROOT in inc/globals.h again __in the
