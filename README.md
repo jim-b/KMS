@@ -10,7 +10,7 @@ Overview
 This code performs the ECCSI/ Sakke dialogs as defined in RFCs 6507-6508.
 
 
-Points to note:
+    Points to note:
       o It was/ is a personal project. It could do with a serious amount of 
         code review.
       o You will also need to clone and build the associated ECCSI-SAKKE
@@ -22,7 +22,7 @@ Points to note:
         it a tad slower, but this should have limited or no effect in the 
         KMS, as these calculation will be done infrequently offline.
 
- Other things to note with this implementation:
+    Other things to note with this implementation:
       o If you want to turn DEBUG output off, comment out the following line: 
           
             #define ES_OUTPUT_DEBUG
