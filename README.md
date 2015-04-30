@@ -4,7 +4,7 @@ Mikey-Sakke Key Material generator (RFC 6507, 6508, 6509)
 
 Note! If you are viewing this page on the github web page, there is a wiki link on the right hand side of the project screen that provides more details.
 
-This menu code is not robust and can be broken quite easily, it is just there as an example, to shown that the unerlying Key generation works.
+This menu code is not robust and can be broken quite easily. It is just there as a simple example, to show that the underlying Key generation works.
 
 Overview
 --------
