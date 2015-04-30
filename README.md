@@ -3,11 +3,12 @@
 Mikey-Sakke Key Material generator (RFC 6507, 6508, 6509)
 
 Note! If you are viewing this page on the github web page, there is a wiki link on the right hand side of the project screen that provides more details.
-Overview
+
+This menu code is not robust and can be broken quite easily, it is just there as an example, to shown that the unerlying Key generation works.
 
 Overview
 --------
-This code performs the ECCSI/ Sakke dialogs as defined in RFCs 6507-6508.
+This code provides a Mikey-Sakke Key cReation/ Management mechanism ptovided via a simple text based menu. This menu code is not robust and can be broken quite easily. It is just there as an simple example, to show that the unerlying Key generation works.
 
 
 Points to note:
