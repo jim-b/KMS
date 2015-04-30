@@ -896,10 +896,10 @@ void userMenu() {
                             rnd_str_len = 32;
                             ES_PRNG(&rnd_str, rnd_str_len);
                         }
-                        if (res = kms_addUser((char *)&user_date, (char *)&user_uri, 
+                        if ((res = kms_addUser((char *)&user_date, (char *)&user_uri, 
                                 (char *)selected_community+
                                 strlen(STORAGE_COMMUNITIES_DIRECTORY)+1,
-                                &rnd_str, &rnd_str_len) != KMS_V_FAILURE) {
+                                &rnd_str, &rnd_str_len)) != KMS_V_FAILURE) {
                                 /* ES_SUCCESS or ES_FAILURE */
                                 if (res == ES_SUCCESS) {
                                     printf("    User save successful\n");
