@@ -833,6 +833,7 @@ void userMenu() {
     char          confirm            = 0;
     unsigned int  cont               = 1;
     unsigned int  c                  = 0;
+    unsigned int  res                = 0;
     char         *selected_user      = NULL;
     char         *selected_community = NULL;
     FILE         *file_p             = NULL;
@@ -895,11 +896,17 @@ void userMenu() {
                             rnd_str_len = 32;
                             ES_PRNG(&rnd_str, rnd_str_len);
                         }
-                        if (kms_addUser((char *)&user_date, (char *)&user_uri, 
+                        if (res = kms_addUser((char *)&user_date, (char *)&user_uri, 
                                 (char *)selected_community+
                                 strlen(STORAGE_COMMUNITIES_DIRECTORY)+1,
                                 &rnd_str, &rnd_str_len) != KMS_V_FAILURE) {
                                 /* ES_SUCCESS or ES_FAILURE */
+                                if (res == ES_SUCCESS) {
+                                    printf("    User save successful\n");
+                                }
+                                else {
+                                    printf("\n    ERROR: User save failed\n");
+                                }
                                 break;
                         }
                         else { /* The value for 'v' we created failed in 
