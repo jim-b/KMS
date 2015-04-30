@@ -10,7 +10,7 @@ Overview
 This code performs the ECCSI/ Sakke dialogs as defined in RFCs 6507-6508.
 
 
-    Points to note:
+Points to note:
     o It was/ is a personal project. It could do with a serious amount of 
       code review.
     o You will also need to clone and build the associated ECCSI-SAKKE
@@ -33,7 +33,7 @@ Other things to note with this implementation:
       the ECCSI-SAKKE crypto library files. To do this you modify the 
       __ECCSI_SAKKE_DIR__ attribute in the _make-kms_ file, for example:
 
-         ECCSI_SAKKE_DIR=/home/_myname_/ECCSI-SAKKE
+        ECCSI_SAKKE_DIR=/home/_myname_/ECCSI-SAKKE
 
 Making
 
