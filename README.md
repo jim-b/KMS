@@ -23,9 +23,8 @@ Points to note:
        KMS, as these calculation will be done infrequently offline.
 
 Other things to note with this implementation:
-     o If you want to turn DEBUG output off, comment out the following line:
-     
-       #define ES_OUTPUT_DEBUG
+          
+     o If you want to turn DEBUG output off, comment out the following line: #define ES_OUTPUT_DEBUG
       
        from src/utils/log.h __in the ECCSI_SAKKE project and rebuild it__.
      o If you want to change where data (community and user key data) you 
@@ -64,7 +63,7 @@ Note! You will need to do the following first before running:
           
           export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:<path-to-where-you-installed-ECCSI-SAKKE>/lib
           
-      refer to make script file for more details.
+refer to make script file for more details.
 
 Doxygen
 -------
