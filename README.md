@@ -76,7 +76,7 @@ refer to make script file for more details.
 Doxygen
 -------
 
-For doxygen documentation:
+    For doxygen documentation:
 
     Install:
         yum install graphviz
@@ -86,7 +86,7 @@ For doxygen documentation:
         yum install doxygen
 
 Then:
-    doxygen Doxyfile
+     doxygen Doxyfile
 
 Next, web browser and open file:
 
