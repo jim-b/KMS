@@ -32,10 +32,11 @@ Other things to note with this implementation:
           
             #define ES_OUTPUT_DEBUG
       
-        from src/utils/log.h __in the ECCSI_SAKKE project and rebuild it__.
+        from src/utils/log.h ***in the ECCSI_SAKKE project and rebuild it***.
+        
       o If you want to change where data (community and user key data) you 
-        will need to modify STORAGE_ROOT in inc/globals.h again __in the
-        ECCSI-SAKKE project and rebuild it__.
+        will need to modify STORAGE_ROOT in inc/globals.h again ***in the
+        ECCSI-SAKKE project and rebuild it***.
        
       o In the make file you need to tell the make script where it can find 
         the ECCSI-SAKKE crypto library files. To do this you modify the 
