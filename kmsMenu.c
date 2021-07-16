@@ -43,7 +43,12 @@
 
 #include <kms.h>
 #include <kmsParameters.h>
+
+/* ECCSI/SAKKE includes */
 #include <communityParameters.h>
+#include <userParameters.h>
+#include <mikeySakkeParameters.h>
+#include <esprng.h>
 
 #define STORAGE_KMS_DIRECTORY         "./storage/kms"         /*!< KMS storage directory */
 #ifndef STORAGE_COMMUNITIES_DIRECTORY 
@@ -208,6 +213,7 @@ void kmsMenu() {
     size_t         KSAK_len       = 0;
     BIGNUM        *z_T_bn         = NULL;
     BIGNUM        *KSAK_bn        = NULL;
+    BN_CTX        *bn_ctx         = NULL;
 
     while (cont) {
         memset(kms_name, 0, sizeof(kms));
@@ -292,7 +298,13 @@ void kmsMenu() {
                             do {
                                 ES_PRNG(&KSAK, KSAK_len);
                                 KSAK_bn = BN_bin2bn((unsigned char *)KSAK, KSAK_len, NULL);
-                                BN_nnmod(KSAK_bn, KSAK_bn, community_getq_bn(), NULL); /* mod q */
+                                /* We definitely need a context here - segfaults otherwise. */
+                                if ((bn_ctx = BN_CTX_new()) == NULL) {
+                                    printf("\n    ERROR: Unable to create BN context\n");
+                                }    
+
+                                BN_nnmod(KSAK_bn, KSAK_bn, community_getq_bn(), bn_ctx); /* mod q */
+                                BN_CTX_free(bn_ctx);
                                 if (BN_cmp(KSAK_bn, BN_value_one()) >= 0) {
                                     break;
                                 }
@@ -874,15 +886,15 @@ void userMenu() {
             case 2  : {
                 printf("        Note! entries are not validated.\n");
                 printf("        Enter date validity for new User (YYYY-MM): ");
-                scanf(" %s", &user_date);
+                scanf(" %s", (char *)&user_date);
                 printf("        Enter identify of new User (e.g. tel:+number): ");
-                scanf(" %s", &user_uri);
+                scanf(" %s", (char *)&user_uri);
                 printf("        Which community is the new user part of:\n");
                 selected_community = kms_communityListSelect();
                 if (selected_community) {
                     do {
                         printf("        Do you want to use RFC values, rather than random? (y/n): ");
-                        scanf(" %c", &confirm);
+                        scanf(" %c", (char *)&confirm);
                     } while ((confirm != 'Y') && (confirm != 'y') &&
                              (confirm != 'N') && (confirm != 'n'));
                     do {
@@ -943,7 +955,7 @@ void userMenu() {
                 if (selected_user) {
                     do {
                         printf("\n    Are you absolutely sure? (y/n): ");
-                        scanf(" %c", &confirm);
+                        scanf(" %c", (char *)&confirm);
                     } while ((confirm != 'Y') && (confirm != 'y') &&
                              (confirm != 'N') && (confirm != 'n'));
 
@@ -1041,7 +1053,7 @@ void userMenu() {
                         }
                     }
                     else {
-                        printf("%s    ERROR: Cannot proceed community <%s> for user <%s> does not exist!\n", 
+                        printf("\n    ERROR: Cannot proceed, community <%s> for user <%s> does not exist!\n", 
                                tmp+1, selected_user);
                     }
                     free(selected_user);

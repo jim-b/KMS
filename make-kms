@@ -52,14 +52,16 @@
 ECCSI_SAKKE_DIR=<ECCSI-SAKKE-CODE-DIR>
 
 gcc  -ggdb -DEBUG \
-    -I. -I./4u2change -I${ECCSI_SAKKE_DIR}/inc   -I${ECCSI_SAKKE_DIR}/4u2change \
+    -I. -I./4u2change -I${ECCSI_SAKKE_DIR}/inc -I${ECCSI_SAKKE_DIR}/4u2change \
     -I${ECCSI_SAKKE_DIR}/src/utils -I${ECCSI_SAKKE_DIR}/src/sakke \
     -I${ECCSI_SAKKE_DIR}/src/eccsi -I${ECCSI_SAKKE_DIR}/src/data  \
     -L/usr/lib64 -L/usr/lib32 \
     -L${ECCSI_SAKKE_DIR}/lib \
-    -lssl -lcrypto \
-    -lesprng -lesdata -lescrypt \
     ./4u2change/kmsdb.c \
     ./kmsParameters.c \
     ./kms.c \
-    ./kmsMenu.c -o  kms
+    ./kmsMenu.c \
+    -lescrypt -lesdata -lesprng \
+    -lssl -lcrypto \
+    -o kms
+

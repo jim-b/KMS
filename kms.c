@@ -31,12 +31,15 @@
 #include <openssl/sha.h> /* For SHA256_DIGEST_LENGTH */
 #include <openssl/ec.h>
 
+#include <kmsParameters.h>
 #include <kms.h>
+
+/* ECCSI/SAKKE includes */
 #include <mikeySakkeParameters.h>
 #include <communityParameters.h>
 #include <userParameters.h>
-#include <kmsParameters.h>
 #include <eccsi.h> /* For computeHS */
+#include <msdb.h>
 #include <log.h>
 
 #define KES_SECTION_NAME   "(KMS) " /*!< DEBUG output section ID.     */
@@ -179,7 +182,7 @@ uint8_t kms_createKMSKeys(
             /* Get the Z_T points. */
             Z_Tx_bn = BN_new();
             Z_Ty_bn = BN_new();
-            EC_POINT_get_affine_coordinates_GFp(
+            EC_POINT_get_affine_coordinates(
                 ms_curve,
                 P_point, Z_Tx_bn, Z_Ty_bn, bn_ctx);
 
@@ -238,7 +241,7 @@ uint8_t kms_createKMSKeys(
         if (NULL == (KPAK_point = 
                      EC_POINT_dup(community_getG_point(), ms_curve))) {
             ES_ERROR("%s:%s:%d - Failed to dup. point 'G'!",
-                __FILE__, __FUNCTION__, __LINE__, ms_param_set);
+                __FILE__, __FUNCTION__, __LINE__);
             error_encountered = ES_TRUE;
         }
         else {
@@ -249,7 +252,7 @@ uint8_t kms_createKMSKeys(
             /* Get the KPAK points. */
             KPAK_x_bn = BN_new();
             KPAK_y_bn = BN_new();
-            EC_POINT_get_affine_coordinates_GFp(
+            EC_POINT_get_affine_coordinates(
                 nist_curve, KPAK_point, KPAK_x_bn, KPAK_y_bn, bn_ctx); 
             KPAK_len = (32*2)+1;
             KPAK     = calloc(1, KPAK_len);
@@ -402,7 +405,7 @@ uint8_t kms_createSSKPVTPairForUser(
         /* G */
         Gx_bn  = BN_new();
         Gy_bn  = BN_new();
-        EC_POINT_get_affine_coordinates_GFp(
+        EC_POINT_get_affine_coordinates(
             community_get_NIST_P256_Curve(), community_getG_point(), Gx_bn, Gy_bn, bn_ctx);
         G_len  = 65;
         G      = calloc(1, G_len);
@@ -435,7 +438,7 @@ uint8_t kms_createSSKPVTPairForUser(
         ES_DEBUG("%s        2) Compute PVT (Public Validation Token) PVT = v[G]",
                  KES_SECTION_NAME);
         PVT_point = EC_POINT_new(community_get_NIST_P256_Curve());
-        EC_POINT_set_affine_coordinates_GFp(community_get_NIST_P256_Curve(), 
+        EC_POINT_set_affine_coordinates(community_get_NIST_P256_Curve(), 
             PVT_point, Gx_bn, Gy_bn, bn_ctx);
         res = EC_POINT_mul(community_get_NIST_P256_Curve(), 
                        PVT_point, 0, PVT_point, v_bn, bn_ctx);
@@ -458,7 +461,7 @@ uint8_t kms_createSSKPVTPairForUser(
          * yet.
          */
         memset(kms_uri, 0, sizeof(kms_uri));
-        if (!msdb_communityGetKmsUri(community, &kms_uri)) {
+        if (!msdb_communityGetKmsUri(community, (uint8_t *)&kms_uri)) {
             KSAK_bn = BN_new();
             BN_hex2bn(&KSAK_bn, kms_getKSAK(kms_uri));
 
@@ -468,7 +471,7 @@ uint8_t kms_createSSKPVTPairForUser(
 
             /* Set KPAK to G initially before multiplying by 'KSAK'. */
             KPAK_point = EC_POINT_new(community_get_NIST_P256_Curve());
-            EC_POINT_set_affine_coordinates_GFp(community_get_NIST_P256_Curve(), 
+            EC_POINT_set_affine_coordinates(community_get_NIST_P256_Curve(), 
                 KPAK_point, Gx_bn, Gy_bn, bn_ctx);
             res  = EC_POINT_mul(community_get_NIST_P256_Curve(), 
                                 KPAK_point, 0, KPAK_point, KSAK_bn, bn_ctx);
@@ -491,7 +494,7 @@ uint8_t kms_createSSKPVTPairForUser(
         /* KPAK */
         KPAKx_bn = BN_new();
         KPAKy_bn = BN_new();
-        EC_POINT_get_affine_coordinates_GFp(community_get_NIST_P256_Curve(), 
+        EC_POINT_get_affine_coordinates(community_get_NIST_P256_Curve(), 
                                             KPAK_point, KPAKx_bn, KPAKy_bn, bn_ctx);
         count    = 0;
         kpak_len = 65;
@@ -510,7 +513,7 @@ uint8_t kms_createSSKPVTPairForUser(
         /* PVT */
         PVTx_bn = BN_new();
         PVTy_bn = BN_new();
-        EC_POINT_get_affine_coordinates_GFp(community_get_NIST_P256_Curve(), 
+        EC_POINT_get_affine_coordinates(community_get_NIST_P256_Curve(), 
                                             PVT_point, PVTx_bn, PVTy_bn, bn_ctx);
         *pvt_len = 65;   
         *pvt     = calloc(1, *pvt_len);
@@ -763,7 +766,7 @@ uint8_t kms_createRSK(
              */
             RSK_x_bn = BN_new();
             RSK_y_bn = BN_new();
-            EC_POINT_get_affine_coordinates_GFp(ms_curve, 
+            EC_POINT_get_affine_coordinates(ms_curve, 
                 RSK, RSK_x_bn, RSK_y_bn, bn_ctx);
     
             *rsk_len = 257;
@@ -879,7 +882,7 @@ uint8_t kms_addUser(
      */
 
     /* Look up KMS id from community data. */
-    msdb_communityGetKmsUri(community, &kms_id);
+    msdb_communityGetKmsUri(community, (uint8_t *)&kms_id);
 
     /* Create RSK */
     if (kms_createRSK(1,          /* Mikey-Sakke parameter set to use.      */
